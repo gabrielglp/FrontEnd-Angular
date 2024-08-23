@@ -1,6 +1,6 @@
 # FrontAngular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.4.
+Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli) version 12.1.4.
 
 # Projeto Angular com API .NET 5.0
 Este projeto é uma aplicação Angular que se comunica com uma API .NET 5.0. O projeto inclui funcionalidades de autenticação, gerenciamento de clientes e integração com o serviço de consulta de CEP.
