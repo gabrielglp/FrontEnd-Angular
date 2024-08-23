@@ -1,0 +1,53 @@
+<div class="clientes-container">
+    <div class="header">
+        <button id="register-btn" (click)="openModal()" class="btn">Cadastrar Cliente</button>
+        <div>
+            <input type="text" id="search-input" placeholder="Buscar usuário" class="search-box" [(ngModel)]="searchTerm">
+            <button id="search-btn" (click)="searchClientes()" class="btn ml-4">Buscar</button>
+        </div>
+        <button id="logout-btn" (click)="logout()" class="btn">Sair</button>
+    </div>
+    <h2>Lista de Clientes</h2>
+    <table *ngIf="clientes.length" class="clientes-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Telefone</th>
+                <th>CEP</th>
+                <th>UF</th>
+                <th>Endereço</th>
+                <th>Bairro</th>
+                <th>Complemento</th>
+                <th>Data de Nascimento</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cliente of clientes">
+                <td>{{ cliente.clienteId }}</td>
+                <td>{{ cliente.name }}</td>
+                <td>{{ cliente.cpf }}</td>
+                <td>{{ cliente.telephone }}</td>
+                <td>{{ cliente.cep }}</td>
+                <td>{{ cliente.uf }}</td>
+                <td>{{ cliente.address }}</td>
+                <td>{{ cliente.district }}</td>
+                <td>{{ cliente.complement }}</td>
+                <td>{{ cliente.birthDate }}</td>
+                <td>
+                    <button class="action-btn edit-btn" (click)="openModal(cliente)">Editar</button>
+                    <button class="action-btn delete-btn ml-4" (click)="deleteCliente(cliente.clienteId)">Excluir</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p *ngIf="searchCompleted && !clientes.length" class="no-results">Nenhum cliente encontrado.</p>
+
+    <div *ngIf="isModalVisible" class="modal-overlay">
+        <div class="modal-content">
+            <app-user-modal [isVisible]="isModalVisible" [cliente]="selectedCliente" (close)="closeModal(); handleModalSubmit($event)"></app-user-modal>
+        </div>
+    </div>
+</div>

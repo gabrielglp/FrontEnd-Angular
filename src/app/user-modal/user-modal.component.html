@@ -1,0 +1,48 @@
+<div class="modal-overlay" *ngIf="isVisible" (click)="onOverlayClick()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <h2>{{ user.clienteId ? 'Editar Cliente' : 'Cadastrar Cliente' }}</h2>
+        <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="name">*Nome:</label>
+                <input type="text" id="name" name="name" placeholder="Digite seu nome" [(ngModel)]="user.name" required>
+            </div>
+            <div class="form-group">
+                <label for="cpf">*CPF:</label>
+                <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" [(ngModel)]="user.cpf" (blur)="user.cpf = formatCpf(user.cpf)" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">*Data de Nascimento:</label>
+                <input type="date" id="dob" name="dob" [(ngModel)]="user.dob" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">*Telefone:</label>
+                <input type="text" id="phone" name="phone" placeholder="Digite seu telefone" [(ngModel)]="user.phone" (blur)="user.phone = formatPhone(user.phone)" required>
+            </div>
+            <div class="form-group">
+                <label for="cep">*CEP:</label>
+                <div class="cep-container">
+                    <input type="text" id="cep" name="cep" placeholder="Digite seu CEP" [(ngModel)]="user.cep" (blur)="onCepBlur()" required>
+                    <button type="button" class="btn btn-search" (click)="searchAddress()">Buscar</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="state">*Estado:</label>
+                <input type="text" id="state" name="state" placeholder="Digite seu estado" [(ngModel)]="user.state" required>
+            </div>
+            <div class="form-group">
+                <label for="city">*Cidade:</label>
+                <input type="text" id="city" name="city" placeholder="Digite sua cidade" [(ngModel)]="user.city" required>
+            </div>
+            <div class="form-group">
+                <label for="neighborhood">*Bairro:</label>
+                <input type="text" id="neighborhood" name="neighborhood" placeholder="Digite seu bairro" [(ngModel)]="user.neighborhood" required>
+            </div>
+            <div class="form-group">
+                <label for="complement">Complemento:</label>
+                <input type="text" id="complement" name="complement" placeholder="Digite o complemento" [(ngModel)]="user.complement">
+            </div>
+            <button type="submit" class="btn" [disabled]="!isFormValid()">{{ user.clienteId ? 'Atualizar' : 'Cadastrar' }}</button>
+            <button type="button" class="btn btn-close" (click)="onCloseClick()">Fechar</button>
+        </form>
+    </div>
+</div>
