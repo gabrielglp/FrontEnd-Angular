@@ -2,26 +2,107 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.4.
 
-## Development server
+# Projeto Angular com API .NET 5.0
+Este projeto é uma aplicação Angular que se comunica com uma API .NET 5.0. O projeto inclui funcionalidades de autenticação, gerenciamento de clientes e integração com o serviço de consulta de CEP.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Requisitos
+- Node.js e npm instalados
+- .NET 5.0 SDK
+- Banco de dados SQL Server
 
-## Code scaffolding
+## Configuração do Projeto
+### 1. Configuração do Backend (.NET 5.0)
+Clone o repositório do backend:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+git clone <URL_DO_REPOSITORIO_BACKEND>
+cd <NOME_DO_REPOSITORIO_BACKEND>
+```
 
-## Build
+### 2. Crie e configure o banco de dados:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Certifique-se de ter o PostgreSQL instalado e configurado.
+- Atualize a string de conexão no arquivo appsettings.json com as informações do seu banco de dados.
+```bash
+json
 
-## Running unit tests
+"ConnectionStrings": {
+  "DefaultConnection": "Host=localhost;Database=nome_do_banco;Username=usuario;Password=senha"
+}
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 3. Execute as migrations para criar o banco de dados:
+```bash
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
+### 4. Inicie o servidor API:
 
-## Running end-to-end tests
+```bash
+dotnet run
+A API estará disponível em https://localhost:44339/api.
+```
+## 2. Configuração do Frontend (Angular)
+### 1. Clone o repositório do frontend:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+git clone <URL_DO_REPOSITORIO_FRONTEND>
+cd <NOME_DO_REPOSITORIO_FRONTEND>
+```
+## 2.Instale as dependências:
 
-## Further help
+```bash
+npm install
+```
+- #### 2.1 Lembrando o Node tem que está pelo menos na versão 14.21.3 
+- Está ferramenta permite instalar, gerenciar e alternar entre diferentes versões do Node.js em seu ambiente de desenvolvimento
+```bash
+nvm install 14
+nvm use 14
+```
+### 3. Configure o ambiente:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Atualize o arquivo src/environments/environment.ts com a URL da API:
+
+```bash
+export const environment = {
+  production: false,
+  apiUrl: 'https://localhost:44339/api'
+};
+```
+### 4. Inicie o servidor de desenvolvimento:
+
+```bash
+ng serve
+```
+A aplicação Angular estará disponível em http://localhost:4200.
+
+## 3. Configuração da API de Consulta de CEP
+1. A API de consulta de CEP utilizada é o ViaCEP.
+
+- Endpoint: https://viacep.com.br/ws/{cep}/json/
+- Método: GET
+- Parâmetros: cep (o CEP a ser consultado)
+O serviço ViaCepService já está configurado para consumir essa API e obter informações sobre o endereço a partir do CEP.
+
+## Scripts Disponíveis
+- Para iniciar o backend: dotnet run (a partir do diretório do backend)
+- Para iniciar o frontend: ng serve (a partir do diretório do frontend)
+- Para criar o banco de dados: dotnet ef migrations add InitialCreate e - dotnet ef database update (a partir do diretório do backend)
+## Estrutura do Projeto
+- Backend (.NET 5.0)
+
+- Controllers/: Contém os controladores da API
+- Models/: Contém os modelos de dados
+- Migrations/: Contém as migrations do Entity Framework
+- Program.cs: Configuração do servidor e serviços
+- Startup.cs: Configuração de serviços e pipeline de middleware
+- Frontend (Angular)
+
+- src/app/auth/: Serviços e guards relacionados à autenticação
+- src/app/clientes/: Componentes e serviços relacionados ao gerenciamento de - clientes
+- src/environments/: Configurações de ambiente
+- src/assets/: Arquivos estáticos e estilos
+## Notas Adicionais
+- Certifique-se de que o backend e o frontend estão rodando simultaneamente para garantir a comunicação adequada entre ambos.
+- Para autenticação e autorização, o frontend usa o serviço AuthService e o AuthInterceptor para adicionar tokens de autenticação às requisições HTTP.
