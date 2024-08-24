@@ -25,21 +25,21 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
+    if (this.loginForm.invalid) {
+      this.toastr.warning('Preencha todos os campos obrigatórios corretamente.', 'Aviso');
+      this.loginForm.markAllAsTouched();
+    } else {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe(
         response => {
           this.authService.setAuthToken(response.token);
           this.router.navigate(['/clientes']);
-          this.toastr.success('Login efetuado com sucesso!', 'Success');
+          this.toastr.success('Login efetuado com sucesso!', 'Sucesso');
         },
         error => {
           this.toastr.error('Email ou Senha incorreto.', 'Erro');
         }
       );
-    } else {
-      this.toastr.warning('Preencher todos os campos obrigatórios corretamente.', 'Warning');
-      this.loginForm.markAllAsTouched();
     }
   }
 }

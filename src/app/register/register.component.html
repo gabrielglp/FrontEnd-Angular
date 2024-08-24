@@ -5,18 +5,24 @@
             <div class="form-group">
                 <label for="userName">*Nome de Usuário</label>
                 <input type="text" id="userName" [(ngModel)]="userName" name="userName" placeholder="João" required>
+                <div *ngIf="!userName && isSubmitted" class="error-message">Nome de usuário é obrigatório.</div>
             </div>
             <div class="form-group">
                 <label for="email">*Email</label>
                 <input type="email" id="email" [(ngModel)]="email" name="email" placeholder="exemplo@exemplo.com" required>
+                <div *ngIf="!email && isSubmitted" class="error-message">Email é obrigatório.</div>
+                <div *ngIf="email && !isValidEmail(email) && isSubmitted" class="error-message">Formato de email inválido.</div>
             </div>
             <div class="form-group">
                 <label for="password">*Senha</label>
                 <input type="password" id="password" [(ngModel)]="password" name="password" required>
+                <div *ngIf="!password && isSubmitted" class="error-message">Senha é obrigatória.</div>
             </div>
             <div class="form-group">
                 <label for="confirmPassword">*Confirmar Senha</label>
                 <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+                <div *ngIf="!confirmPassword && isSubmitted" class="error-message">Confirmação de senha é obrigatória.</div>
+                <div *ngIf="password && confirmPassword && password !== confirmPassword && isSubmitted" class="error-message">As senhas não coincidem.</div>
             </div>
             <button type="submit" class="submit-btn">Registrar</button>
             <span class="link">Já tem uma conta? <a routerLink="/login">Login</a></span>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-clientes',
@@ -14,7 +15,7 @@ export class ClientesComponent implements OnInit {
   searchCompleted = false;
   router: any;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.loadClientes();
@@ -106,6 +107,7 @@ export class ClientesComponent implements OnInit {
     this.authService.deleteCliente(id).subscribe(
       () => {
         this.loadClientes();
+        this.toastr.success('Usuario excluido!')
       },
       (error) => {
         console.error('Error deleting cliente', error);

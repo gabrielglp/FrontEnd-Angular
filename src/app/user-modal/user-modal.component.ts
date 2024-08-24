@@ -8,9 +8,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./user-modal.component.css']
 })
 export class UserModalComponent implements OnChanges {
-onCepBlur() {
-throw new Error('Method not implemented.');
-}
   @Input() isVisible = false;
   @Input() cliente: any = null;
   @Output() close = new EventEmitter<any>();
@@ -27,6 +24,8 @@ throw new Error('Method not implemented.');
     neighborhood: '',
     complement: ''
   };
+  isSubmitted = false;
+  formError = '';
 
   constructor(private viaCepService: ViaCepService, private cd: ChangeDetectorRef, private toastr: ToastrService) { }
 
@@ -44,13 +43,13 @@ throw new Error('Method not implemented.');
         neighborhood: this.cliente.district,
         complement: this.cliente.complement
       };
-      this.populateAddressFields(this.user.cep); // Preencher campos de endereço ao editar
+      this.populateAddressFields(this.user.cep)
       this.cd.detectChanges();
     } else {
       this.resetForm();
     }
   }
-  
+
   populateAddressFields(cep: string): void {
     this.viaCepService.getAddress(cep).subscribe(
       address => {
@@ -59,14 +58,13 @@ throw new Error('Method not implemented.');
           this.user.city = address.localidade;
           this.user.neighborhood = address.bairro;
           this.user.complement = address.complemento;
-          this.cd.detectChanges(); // Detectar mudanças após a atualização do endereço
+          this.cd.detectChanges();
         } else {
           this.toastr.error('Endereço não encontrado para o CEP informado.');
         }
       }
     );
   }
-
 
   formatCpf(value: string, onInit = false): string {
     value = value.replace(/\D/g, '');
@@ -114,6 +112,8 @@ throw new Error('Method not implemented.');
   }
 
   onSubmit(): void {
+    this.isSubmitted = true;
+
     if (this.isFormValid()) {
       const formattedUser = {
         clienteId: this.user.clienteId,
@@ -130,6 +130,12 @@ throw new Error('Method not implemented.');
 
       this.close.emit(formattedUser);
       this.closeModal();
+
+      if (this.user.clienteId === 0) {
+        this.toastr.success('Cliente criado com sucesso!');
+      } else {
+        this.toastr.success('Cliente atualizado com sucesso!');
+      }
     }
   }
 
@@ -138,14 +144,35 @@ throw new Error('Method not implemented.');
   }
 
   public isFormValid(): boolean {
-    return !!(this.user.name &&
-              this.user.cpf &&
-              this.user.dob &&
-              this.user.phone &&
-              this.user.cep &&
-              this.user.state &&
-              this.user.city &&
-              this.user.neighborhood);
+    if (this.user.name &&
+        this.user.cpf &&
+        this.user.dob &&
+        this.user.phone &&
+        this.user.cep &&
+        this.user.state &&
+        this.user.city &&
+        this.user.neighborhood &&
+        this.isValidCpf(this.user.cpf) &&
+        this.isValidPhone(this.user.phone) &&
+        this.isValidCep(this.user.cep)) {
+      this.formError = '';
+      return true;
+    } else {
+      this.formError = 'Por favor, preencha todos os campos obrigatórios.';
+      return false;
+    }
+  }
+
+  public isValidCpf(cpf: string): boolean {
+    return cpf.replace(/\D/g, '').length === 11;
+  }
+
+  public isValidPhone(phone: string): boolean {
+    return phone.replace(/\D/g, '').length >= 10;
+  }
+
+  public isValidCep(cep: string): boolean {
+    return cep.replace(/\D/g, '').length === 8;
   }
 
   private resetForm(): void {
@@ -161,6 +188,8 @@ throw new Error('Method not implemented.');
       neighborhood: '',
       complement: ''
     };
+    this.isSubmitted = false;
+    this.formError = '';
   }
 
   private convertDateToApiFormat(date: string): string {
@@ -171,5 +200,23 @@ throw new Error('Method not implemented.');
   private convertDateToInputFormat(date: string): string {
     const [day, month, year] = date.split('/');
     return `${year}-${month}-${day}`;
+  }
+
+  public onCepBlur(): void {
+    if (this.user.cep && this.user.cep.length === 8) {
+      this.viaCepService.getAddress(this.user.cep).subscribe(
+        address => {
+          if (address) {
+            this.user.state = address.uf;
+            this.user.city = address.localidade;
+            this.user.neighborhood = address.bairro;
+            this.user.complement = address.complemento;
+            this.cd.detectChanges();
+          } else {
+            this.toastr.error('Endereço não encontrado para o CEP informado.');
+          }
+        }
+      );
+    } 
   }
 }
