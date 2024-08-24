@@ -22,6 +22,8 @@ html, body {
   .toast-warning {
     background-color: #ffc107 !important; 
     color: black !important;
+    padding: 1rem;
+    border-radius: 1rem;
   }
   
   #toast-container {
