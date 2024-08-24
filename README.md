@@ -5,43 +5,6 @@ Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli
 # Projeto Angular com API .NET 5.0
 Este projeto é uma aplicação Angular que se comunica com uma API .NET 5.0. O projeto inclui funcionalidades de autenticação, gerenciamento de clientes e integração com o serviço de consulta de CEP.
 
-## Requisitos
-- Node.js e npm instalados
-- .NET 5.0 SDK
-- Banco de dados SQL Server
-
-## Configuração do Projeto
-### 1. Configuração do Backend (.NET 5.0)
-Clone o repositório do backend:
-
-```bash
-git clone <URL_DO_REPOSITORIO_BACKEND>
-cd <NOME_DO_REPOSITORIO_BACKEND>
-```
-
-### 2. Crie e configure o banco de dados:
-
-- Certifique-se de ter o PostgreSQL instalado e configurado.
-- Atualize a string de conexão no arquivo appsettings.json com as informações do seu banco de dados.
-```bash
-json
-
-"ConnectionStrings": {
-  "DefaultConnection": "Host=localhost;Database=nome_do_banco;Username=usuario;Password=senha"
-}
-```
-
-### 3. Execute as migrations para criar o banco de dados:
-```bash
-dotnet ef migrations add InitialCreate
-dotnet ef database update
-```
-### 4. Inicie o servidor API:
-
-```bash
-dotnet run
-A API estará disponível em https://localhost:44339/api.
-```
 ## 2. Configuração do Frontend (Angular)
 ### 1. Clone o repositório do frontend:
 
