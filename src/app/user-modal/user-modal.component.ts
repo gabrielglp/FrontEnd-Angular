@@ -22,10 +22,11 @@ export class UserModalComponent implements OnChanges {
     state: '',
     city: '',
     neighborhood: '',
-    complement: ''
+    complement: '',
   };
   isSubmitted = false;
   formError = '';
+  phone: string | undefined;
 
   constructor(private viaCepService: ViaCepService, private cd: ChangeDetectorRef, private toastr: ToastrService) { }
 
@@ -218,5 +219,31 @@ export class UserModalComponent implements OnChanges {
         }
       );
     } 
+  }
+
+  onPhoneInput(event: any): void {
+    let value = event.target.value;
+    value = value.replace(/\D/g, '');
+  
+    if (value.length > 11) {
+      value = value.substring(0, 11);
+    }
+  
+    this.user.phone = this.applyMask(value);
+  }
+  
+
+  private applyMask(value: string): string {
+    value = value.replace(/\D/g, '');
+    
+    if (value.length > 11) {
+      value = value.substring(0, 11);
+    }
+    
+    if (value.length <= 11) {
+      value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    }
+    
+    return value;
   }
 }

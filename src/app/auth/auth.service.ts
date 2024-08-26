@@ -90,7 +90,6 @@ export class AuthService {
     if (cpf) params = params.set('cpf', cpf);
     if (name) params = params.set('name', name);
   
-    console.log(`Searching for: CPF=${cpf}, Name=${name}`);
     return this.http.get<Cliente[]>(`${this.apiUrl}/Clientes/search`, { params });
   }
 

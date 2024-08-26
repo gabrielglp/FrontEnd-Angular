@@ -27,9 +27,6 @@ export class ClientesComponent implements OnInit {
         this.clientes = data;
         this.searchCompleted = true;
       },
-      (error) => {
-        console.error('Error loading clientes', error);
-      }
     );
   }
 
@@ -49,7 +46,6 @@ export class ClientesComponent implements OnInit {
           this.searchCompleted = true;
         },
         (error: any) => {
-          console.error('Error searching clientes by CPF', error);
           this.clientes = [];
           this.searchCompleted = true;
         }
@@ -61,7 +57,6 @@ export class ClientesComponent implements OnInit {
           this.searchCompleted = true;
         },
         (error: any) => {
-          console.error('Error searching clientes by name', error);
           this.clientes = [];
           this.searchCompleted = true;
         }
@@ -85,9 +80,6 @@ export class ClientesComponent implements OnInit {
         () => {
           this.loadClientes();
           this.closeModal();
-        },
-        (error) => {
-          console.error('Error updating cliente', error);
         }
       );
     } else {
@@ -95,9 +87,6 @@ export class ClientesComponent implements OnInit {
         () => {
           this.loadClientes();
           this.closeModal();
-        },
-        (error) => {
-          console.error('Error creating cliente', error);
         }
       );
     }
@@ -108,9 +97,6 @@ export class ClientesComponent implements OnInit {
       () => {
         this.loadClientes();
         this.toastr.success('Usuario excluido!')
-      },
-      (error) => {
-        console.error('Error deleting cliente', error);
       }
     );
   }

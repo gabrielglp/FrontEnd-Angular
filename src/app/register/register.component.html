@@ -9,9 +9,10 @@
             </div>
             <div class="form-group">
                 <label for="email">*Email</label>
-                <input type="email" id="email" [(ngModel)]="email" name="email" placeholder="exemplo@exemplo.com" required>
+                <input type="email" id="email" [(ngModel)]="email" name="email" placeholder="exemplo@exemplo.com" required (input)="onEmailInput()">
                 <div *ngIf="!email && isSubmitted" class="error-message">Email é obrigatório.</div>
                 <div *ngIf="email && !isValidEmail(email) && isSubmitted" class="error-message">Formato de email inválido.</div>
+                <div *ngIf="emailExistsError" class="error-message">Este email já está registrado.</div>
             </div>
             <div class="form-group">
                 <label for="password">*Senha</label>
