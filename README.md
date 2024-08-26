@@ -23,24 +23,14 @@ npm install
 nvm install 14
 nvm use 14
 ```
-### 3. Configure o ambiente:
-
-- Atualize o arquivo src/environments/environment.ts com a URL da API:
-
-```bash
-export const environment = {
-  production: false,
-  apiUrl: 'https://localhost:44339/api'
-};
-```
-### 4. Inicie o servidor de desenvolvimento:
+### 3. Inicie o servidor de desenvolvimento:
 
 ```bash
 ng serve
 ```
 A aplicação Angular estará disponível em http://localhost:4200.
 
-## 3. Configuração da API de Consulta de CEP
+## 4. Configuração da API de Consulta de CEP
 1. A API de consulta de CEP utilizada é o ViaCEP.
 
 - Endpoint: https://viacep.com.br/ws/{cep}/json/
