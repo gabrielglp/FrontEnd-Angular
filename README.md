@@ -17,7 +17,20 @@ cd <NOME_DO_REPOSITORIO_FRONTEND>
 ```bash
 npm install
 ```
-- #### 2.1 Lembrando o Node tem que está pelo menos na versão 14.21.3 
+- #### 2.1 Lembrando o Node tem que está pelo menos na versão 14.21.3
+  ## Instalação do nvm-windows
+
+Para instalar o nvm no Windows, siga estas etapas:
+
+1. Baixe o instalador do nvm-windows:
+   [nvm-setup.exe](https://github.com/coreybutler/nvm-windows/releases/download/1.1.12/nvm-setup.exe)
+
+2. Execute o instalador e siga as instruções na tela.
+
+3. Após a instalação, abra o terminal e verifique a instalação com o comando:
+ ```bash
+ nvm --version
+ ```
 - Está ferramenta permite instalar, gerenciar e alternar entre diferentes versões do Node.js em seu ambiente de desenvolvimento
 ```bash
 nvm install 14
