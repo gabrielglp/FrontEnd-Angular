@@ -10,14 +10,19 @@ Este projeto é uma aplicação Angular que se comunica com uma API .NET 5.0. O 
 
 ```bash
 git clone <URL_DO_REPOSITORIO_FRONTEND>
-cd <NOME_DO_REPOSITORIO_FRONTEND>
+cd <NOME_DO_REPOSITORIO_FRONTEND>  
+```
+
+- #### 2.1 Instale o Angular CLI (versão 12.1):
+Caso ainda não tenha o Angular CLI instalado ou precise garantir que está utilizando a versão 12.1, execute o seguinte comando:
+```bash
+npm install -g @angular/cli@12.1
 ```
 ## 2.Instale as dependências:
-
 ```bash
 npm install
 ```
-- #### 2.1 Lembrando o Node tem que está pelo menos na versão 14.21.3
+- #### 2.2 Lembrando o Node tem que está pelo menos na versão 14.21.3
   ## Instalação do nvm-windows
 
 Para instalar o nvm no Windows, siga estas etapas:
@@ -39,7 +44,7 @@ nvm use 14
 ### 3. Inicie o servidor de desenvolvimento:
 
 ```bash
-ng serve
+ng serve ou npx ng serve
 ```
 A aplicação Angular estará disponível em http://localhost:4200.
 
