@@ -12,6 +12,8 @@ export class UserModalComponent implements OnChanges {
   @Input() cliente: any = null;
   @Output() close = new EventEmitter<any>();
 
+  today: string | undefined;
+
   user = {
     clienteId: 0,
     name: '',
@@ -27,8 +29,11 @@ export class UserModalComponent implements OnChanges {
   isSubmitted = false;
   formError = '';
   phone: string | undefined;
+  dobError: string | undefined;
 
-  constructor(private viaCepService: ViaCepService, private cd: ChangeDetectorRef, private toastr: ToastrService) { }
+  constructor(private viaCepService: ViaCepService, private cd: ChangeDetectorRef, private toastr: ToastrService) {
+    this.today = new Date().toISOString().split('T')[0];
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['cliente'] && this.cliente) {
@@ -114,6 +119,13 @@ export class UserModalComponent implements OnChanges {
 
   onSubmit(): void {
     this.isSubmitted = true;
+
+    if (!this.isValidDob(this.user.dob)) {
+      this.dobError = 'A data de nascimento não pode ser maior que a data atual.';
+      return;
+    } else {
+        this.dobError = '';
+    }
 
     if (this.isFormValid()) {
       const formattedUser = {
@@ -201,6 +213,14 @@ export class UserModalComponent implements OnChanges {
   private convertDateToInputFormat(date: string): string {
     const [day, month, year] = date.split('/');
     return `${year}-${month}-${day}`;
+  }
+
+  public isValidDob(dob: string): boolean {
+    const currentDate = new Date();
+    const [year, month, day] = dob.split('-').map(Number);
+    const enteredDate = new Date(year, month - 1, day);
+
+    return enteredDate <= currentDate;
   }
 
   public onCepBlur(): void {
